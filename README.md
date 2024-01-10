@@ -48,8 +48,17 @@ Created symlink /etc/systemd/system/multi-user.target.wants/temperature_exporter
 $ sudo systemctl start temperature_exporter
 ```
 
-## メトリクスの確認
+動いているか確認する。
 
 ```console
 $ curl http://localhost:17818/metrics
+```
+
+Prometheus側では次のように設定する。
+
+```yaml
+scrape_configs:
+  - job_name: 'temperature_exporter'
+    static_configs:
+      - targets: ['localhost:17818']
 ```
