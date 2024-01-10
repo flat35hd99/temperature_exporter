@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -21,6 +23,7 @@ func recordMetrics() {
 const (
 	// TODO: make this configurable
 	recordInterval = 1 * time.Second
+	port           = 17818
 )
 
 var (
@@ -33,6 +36,9 @@ var (
 )
 
 func main() {
+	recordMetrics()
+
 	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":17818", nil)
+	log.Default().Printf("Starting server on port %d", port)
+	http.ListenAndServe(":"+strconv.Itoa(port), nil)
 }
