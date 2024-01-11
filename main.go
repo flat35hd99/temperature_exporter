@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
@@ -16,7 +17,10 @@ func recordMetrics() {
 		for {
 			temperature.With(prometheus.Labels{
 				"id": "asdf",
-			}).Set(25.0)
+			}).Set(25.0 + rand.Float64()*5.0 - 2.5)
+			temperature.With(prometheus.Labels{
+				"id": "qwer",
+			}).Set(25.0 + rand.Float64()*5.0 - 2.5)
 			time.Sleep(recordInterval)
 		}
 	}()
