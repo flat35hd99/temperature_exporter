@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"regexp"
@@ -17,13 +16,6 @@ import (
 func recordMetrics() {
 	go func() {
 		for {
-			temperature.With(prometheus.Labels{
-				"id": "sample1",
-			}).Set(25.0 + rand.Float64()*5.0 - 2.5)
-			temperature.With(prometheus.Labels{
-				"id": "sample2",
-			}).Set(25.0 + rand.Float64()*5.0 - 2.5)
-
 			// Search /sys/bus/w1/devices/<device id>/w1_slave
 			// 1. Search device ids and then 2. get temperature from w1_slave of each device
 			dirEntries, err := os.ReadDir("/sys/bus/w1/devices")
