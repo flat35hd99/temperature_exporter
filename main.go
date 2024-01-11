@@ -14,7 +14,9 @@ import (
 func recordMetrics() {
 	go func() {
 		for {
-			temperature.Set(25.0)
+			temperature.With(prometheus.Labels{
+				"id": "asdf",
+			}).Set(25.0)
 			time.Sleep(recordInterval)
 		}
 	}()
@@ -28,10 +30,12 @@ const (
 
 var (
 	namespace   = "flat35hd99_private"
-	temperature = promauto.NewGauge(prometheus.GaugeOpts{
+	temperature = promauto.NewGaugeVec(prometheus.GaugeOpts{
 		Namespace: namespace,
 		Name:      "temperature_in_celsius",
 		Help:      "Current temperature in celsius",
+	}, []string{
+		"id",
 	})
 )
 
