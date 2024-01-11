@@ -24,7 +24,8 @@ func recordMetrics() {
 				"id": "sample2",
 			}).Set(25.0 + rand.Float64()*5.0 - 2.5)
 
-			// List directories of /sys/bus/w1/devices
+			// Search /sys/bus/w1/devices/<device id>/w1_slave
+			// 1. Search device ids and then 2. get temperature from w1_slave of each device
 			dirEntries, err := os.ReadDir("/sys/bus/w1/devices")
 			if err != nil {
 				time.Sleep(recordInterval)
